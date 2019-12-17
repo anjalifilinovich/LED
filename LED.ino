@@ -50,6 +50,16 @@ void setup() {
       // FastLED.addLeds<DOTSTAR, DATA_PIN, CLOCK_PIN, RGB>(leds, NUM_LEDS);
 }
 
+void turnLedOff(int i) {
+  leds[i] = CRGB::Black;
+  FastLED.show();
+}
+
+void turnLedOn(int i) {
+  leds[i] = CRGB::Cyan;
+  FastLED.show();
+}
+
 void loop() { 
 
   restart:
@@ -65,15 +75,13 @@ void loop() {
 
   //TURN ALL LEDS OFF
   for (int i = 0; i <= NUM_LEDS; i++) {
-    leds[i] = CRGB::Black;
-    FastLED.show();
+    turnLedOn(i);
   }
   
   for (int i = 0; i <= NUM_LEDS - 2; i++) {
   
   //TURN LED ON  
-  leds[i] = CRGB::Cyan;
-  FastLED.show();
+  turnLedOn(i);
 
   //IS BUTTON PRESSED? IF SO, GO TO BEGINNING OF VOID LOOP
   BUTTON_STATE = digitalRead(BUTTON_PIN);
