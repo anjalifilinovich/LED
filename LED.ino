@@ -10,17 +10,12 @@
 #define LED_PIN 5
 //#define CLOCK_PIN 13
 #define BUTTON_PIN 2
-#define REMOTE_PIN A4
-
-IRrecv irrecv(REMOTE_PIN);
-decode_results result;
+#define GO_PIN 3
 
 // Define the array of leds
 CRGB leds[NUM_LEDS];
 
 void setup() {
-      Serial.begin(9600);
-      irrecv.enableIRIn();
       // Uncomment/edit one of the following lines for your leds arrangement.
       // FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
@@ -59,20 +54,15 @@ void turnLedOn(int i) {
   leds[i] = CRGB::Cyan;
   FastLED.show();
 }
+pinMode(GO_PIN, OUTPUT);
 
 void loop() { 
 
   restart:
 
-  int BUTTON_STATE = LOW;
-  
-  if (irrecv.decode(&result)) {
-  
-  irrecv.resume();
-  float REMOTE = result.value; 
-  
-  if (REMOTE == 3810010624.00) {
-
+  int GO_STATE = LOW;
+  }
+ 
   //TURN ALL LEDS OFF
   for (int i = 0; i <= NUM_LEDS; i++) {
     turnLedOn(i);
@@ -82,6 +72,13 @@ void loop() {
   
   //TURN LED ON  
   turnLedOn(i);
+  
+  int GO_STATE = LOW;
+  GO_STATE == digitalRead(GO_PIN);
+  if (GO_STATE == HIGH){
+        turnLedOn(i);
+  }      
+   
 
   //IS BUTTON PRESSED? IF SO, GO TO BEGINNING OF VOID LOOP
   BUTTON_STATE = digitalRead(BUTTON_PIN);
