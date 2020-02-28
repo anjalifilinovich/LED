@@ -1,5 +1,4 @@
 #include <FastLED.h>
-#include <IRremote.h>
 
 // How many leds in your strip?
 #define NUM_LEDS 60
